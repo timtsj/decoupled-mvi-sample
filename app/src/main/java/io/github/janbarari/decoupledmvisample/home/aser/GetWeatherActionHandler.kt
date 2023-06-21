@@ -5,6 +5,8 @@ import io.github.janbarari.decoupledmvisample.home.presentation.statemapper.Weat
 import io.github.janbarari.mvi.ActionHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import java.lang.Exception
+import java.lang.RuntimeException
 import javax.inject.Inject
 
 class GetWeatherActionHandler @Inject constructor(
@@ -17,9 +19,16 @@ class GetWeatherActionHandler @Inject constructor(
         effect: suspend (HomeEffect) -> Unit
     ): Flow<HomeReducer> {
         return flow {
+            effect.invoke(HomeEffect.ShowToast("Hello"))
             emit(HomeReducer.OnLoading)
-            val weatherState = weatherStateMapper.map(getWeatherUseCase.execute(action.city))
-            emit(HomeReducer.OnWeatherLoaded(weatherState))
+            try {
+                throw RuntimeException("test")
+                val weatherState = weatherStateMapper.map(getWeatherUseCase.execute(action.city))
+                emit(HomeReducer.OnWeatherLoaded(weatherState))
+            } catch (e: Exception) {
+                emit(HomeReducer.Error)
+            }
+
         }
     }
 }

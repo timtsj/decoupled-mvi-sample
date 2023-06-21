@@ -11,7 +11,8 @@ sealed class HomeReducer(
     object OnLoading: HomeReducer(
         {
             it.copy(
-                isLoading = true
+                isLoading = true,
+                isError = false,
             )
         }
     )
@@ -22,7 +23,8 @@ sealed class HomeReducer(
         {
             it.copy(
                 isLoading = false,
-                weatherStatus = weatherState.result
+                weatherStatus = weatherState.result,
+                isError = false,
             )
         }
     )
@@ -33,9 +35,16 @@ sealed class HomeReducer(
         {
             it.copy(
                 isLoading = false,
-                tempStatus = tempState.result
+                tempStatus = tempState.result,
+                isError = false,
             )
         }
     )
 
+    object Error : HomeReducer({
+        it.copy(
+            isError = true,
+            isLoading = false,
+        )
+    })
 }

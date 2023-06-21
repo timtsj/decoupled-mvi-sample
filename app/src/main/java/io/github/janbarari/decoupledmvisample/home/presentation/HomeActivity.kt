@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.janbarari.decoupledmvisample.home.view.MainScreen
 import io.github.janbarari.decoupledmvisample.theme.DecoupledMVISampleTheme
@@ -20,7 +21,8 @@ class HomeActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    MainScreen()
+                    val viewModel: HomeViewModel = viewModel()
+                    MainScreen(viewModel)
                 }
             }
         }
